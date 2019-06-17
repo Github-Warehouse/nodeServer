@@ -1,0 +1,9 @@
+gulp:
+- server
+- sass
+- js module
+- mock
+- version controll
+
+安装的包：
+npm install -g webpack webpack-cli webpack-dev-server

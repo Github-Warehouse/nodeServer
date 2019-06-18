@@ -35,6 +35,18 @@ module.exports = {
                         }
                     }
                 ]
+            },
+            {
+                test:/\.html$/i,
+                use:{
+                    loader:'string-loader'
+                }
+            },
+            {
+                test:/\.hbs$/i,
+                use:{
+                    loader:'handlebars-loader'
+                }
             }
         ]
     },

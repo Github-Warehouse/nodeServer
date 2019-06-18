@@ -90,21 +90,22 @@
 /*!********************!*\
   !*** ./src/app.js ***!
   \********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-eval("const userImg = __webpack_require__(/*! ./assets/timg.jpg */ \"./src/assets/timg.jpg\")\r\nlet body=document.querySelector('body')\r\nlet img=new Image()\r\nimg.src=userImg\r\nbody.appendChild(img)\r\nconsole.log('ok');\r\n\n\n//# sourceURL=webpack:///./src/app.js?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _views_menu_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./views/menu.html */ \"./src/views/menu.html\");\n/* harmony import */ var _views_menu_html__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_views_menu_html__WEBPACK_IMPORTED_MODULE_0__);\n\r\n\r\nconst template= Handlebars.compile(_views_menu_html__WEBPACK_IMPORTED_MODULE_0___default.a)\r\n\r\nconst str=template({title:'hello'})\r\n\r\nconsole.log(str);\r\n\r\n\n\n//# sourceURL=webpack:///./src/app.js?");
 
 /***/ }),
 
-/***/ "./src/assets/timg.jpg":
+/***/ "./src/views/menu.html":
 /*!*****************************!*\
-  !*** ./src/assets/timg.jpg ***!
+  !*** ./src/views/menu.html ***!
   \*****************************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-eval("module.exports = __webpack_require__.p + \"3a392efeec2c00380277a0f49decfdf0.jpg\";\n\n//# sourceURL=webpack:///./src/assets/timg.jpg?");
+eval("module.exports = \"<li class=\\\"header\\\">HEADER</li><!-- Optionally, you can add icons to the links --><li class=\\\"active\\\"><a href=\\\"#\\\"><i class=\\\"fa fa-link\\\"></i> <span>Link</span></a></li><li><a href=\\\"#\\\"><i class=\\\"fa fa-link\\\"></i> <span>Another Link</span></a></li><li class=\\\"treeview\\\">    <a href=\\\"#\\\"><i class=\\\"fa fa-link\\\"></i> <span>多级菜单</span>        <span class=\\\"pull-right-container\\\">            <i class=\\\"fa fa-angle-left pull-right\\\"></i>        </span>    </a>    <ul class=\\\"treeview-menu\\\">        <li><a href=\\\"#\\\">{{title}}</a></li>        <li><a href=\\\"#\\\">Link in level 2</a></li>    </ul></li>\"\n\n//# sourceURL=webpack:///./src/views/menu.html?");
 
 /***/ })
 

@@ -1,0 +1,58 @@
+<!-- Menu Toggle Button -->
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="user">
+    <!-- The user image in the navbar-->
+    {{#if isSignin}}
+    <img src="public/images/user2-160x160.jpg" class="user-image" alt="User Image">
+    <span class="hidden-xs" id="user-login">你好，admin</span>
+    {{else}}
+    <!-- hidden-xs hides the username on small devices so only the image appears. -->
+    <span class="hidden-xs" id="user-login">登录</span>
+    <span class="hidden-xs" id="user-register">注册</span>
+    {{/if}}
+</a>
+<ul class="dropdown-menu">
+    <!-- The user image in the menu -->
+    {{#if isSignin}}
+    <li class="user-header">
+        <img src="public/images/user2-160x160.jpg" class="img-circle" alt="User Image">
+
+        <p>
+            Alexander Pierce - Web Developer
+            <small>Member since Nov. 2012</small>
+        </p>
+    </li>
+    <!-- Menu Body -->
+    {{else}}
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">
+                登陆
+            </h3>
+        </div>
+        <!-- form -->
+        <form action="" role="form">
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="inputUsername" class="control-label">账号：</label>
+                    <input type="text" name="username" id="inputUsername" placeholder="请输入账号" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="inputPassword" class="control-label">密码：</label>
+                    <input type="password" name="password" id="inputPassword" placeholder="请输入密码" class="form-control">
+                </div>
+
+            </div>
+        </form>
+    </div>
+    {{/if}}
+    <!-- Menu Footer-->
+    <li class="user-footer">
+        <div class="pull-left">
+            <a href="#" class="btn btn-primary btn-flat">确定</a>
+        </div>
+        <div class="pull-right">
+            <a href="#" class="btn btn-default btn-flat">取消</a>
+        </div>
+    </li>
+</ul>

@@ -1,9 +1,32 @@
-import menuTpl from '../views/menu.html';
-import homeTpl from '../views/home.hbs';
+import menuTpl from '../views/menu.html'
+import userTpl from '../views/user.html'
+import homeTpl from '../views/home.hbs'
+
+function _renderUserTpl({ isSignin = false }) {
+    let template = Handlebars.compile(userTpl)
+    let renderUserTpl = template({
+        isSignin
+    })
+    $('.user-menu').html(renderUserTpl)
+}
+
+function _user(res) {
+    _renderUserTpl({})
+    $('#user').on('click', 'span', function (e) {
+        // e.stopPropagation()
+        if ($(this).attr('id') === 'user-login') {
+            $('.box-title').html('登录')
+        } else {
+            $('.box-title').html('注册')
+        }
+    })
+}
 
 export const render = (req, res, next) => {
-
     $('.sidebar-menu').html(menuTpl)
+    _renderUserTpl({ isSignin: false })
+    _user(res)
 
+    // 返回路由的页面
     res.render(homeTpl({}))
 }

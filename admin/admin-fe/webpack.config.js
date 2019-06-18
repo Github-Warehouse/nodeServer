@@ -27,25 +27,31 @@ module.exports = {
         rules: [
             {
                 test: /\.(png|jpg|gif)$/i,
-                use: [
-                    {
-                        loader: 'url-loader',
-                        options: {
-                            limit: 1
-                        }
+                use: [{
+                    loader: 'url-loader',
+                    options: {
+                        limit: 1
                     }
+                }]
+            },
+            {
+                test: /\.(scss|css)$/i,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader'
                 ]
             },
             {
-                test:/\.html$/i,
-                use:{
-                    loader:'string-loader'
+                test: /\.html$/i,
+                use: {
+                    loader: 'string-loader'
                 }
             },
             {
-                test:/\.hbs$/i,
-                use:{
-                    loader:'handlebars-loader'
+                test: /\.hbs$/i,
+                use: {
+                    loader: 'handlebars-loader'
                 }
             }
         ]

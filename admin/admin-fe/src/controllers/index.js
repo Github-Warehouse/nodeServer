@@ -10,6 +10,7 @@ function _renderUserTpl({ isSignin = false }) {
     $('.user-menu').html(renderUserTpl)
 }
 
+// 渲染user模板，绑定登录注册事件
 function _user(res) {
     _renderUserTpl({})
     $('#user').on('click', 'span', function (e) {
@@ -22,10 +23,23 @@ function _user(res) {
     })
 }
 
+// 用户注册
+function _register() {
+    $('#confirm').on('click', () => {
+        $.ajax({
+            url: '/api/users/register',
+            type: 'POST',
+            data: $('#user-form').serialize()
+        })
+    })
+}
+
 export const render = (req, res, next) => {
     $('.sidebar-menu').html(menuTpl)
     _renderUserTpl({ isSignin: false })
     _user(res)
+
+    _register()
 
     // 返回路由的页面
     res.render(homeTpl({}))

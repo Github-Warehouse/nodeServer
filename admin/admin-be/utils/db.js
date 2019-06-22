@@ -1,15 +1,9 @@
 const mongoose = require('mongoose')
 
-mongoose.connect('mongodb://localhost:27017/kaola')
+mongoose.connect('mongodb://localhost/nolovr', { useNewUrlParser: true })
 
-const Kaolas = mongoose.model('kaolas', {
-    name: String
-})
+let db = mongoose.connection
 
-const kitty = new Kaolas({
-    name: 'hello'
-})
+db.on('error', console.error.bind(console, 'connection error'))
 
-kitty.save().then((result) => {
-    console.log(result);
-})
+module.exports = db

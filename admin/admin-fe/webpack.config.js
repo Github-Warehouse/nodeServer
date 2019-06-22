@@ -19,7 +19,12 @@ module.exports = {
     devServer: {
         contentBase: path.join(__dirname, './dev'),
         compress: true,
-        port: 80
+        port: 80,
+        proxy:{
+            '/api':{
+                target:'http://localhost:9528'
+            }
+        }
     },
 
     // 配置loader

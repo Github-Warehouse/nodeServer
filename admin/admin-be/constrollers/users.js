@@ -2,7 +2,7 @@ const userModel = require('../models/users')
 const bcrypt = require('bcryptjs')
 
 class UserController {
-    _hashPassword(pwd, cb) {
+    hashPassword(pwd) {
         return new Promise((resolve, reject) => {
             bcrypt.hash(pwd, 10, (err, hash) => {
                 resolve(hash)
@@ -10,45 +10,75 @@ class UserController {
         })
     }
 
+    comparePassword(pwd, hash) {
+        return new Promise((resolve) => {
+            bcrypt.compare(pwd, hash, function (err, res) {
+                resolve(res)
+            })
+        })
+    }
+
     async register(req, res, next) {
+
+        let user = await userModel.select(req.body)
+        if (user) {
+            res.render('success', {
+                data: JSON.stringify({
+                    message: '用户名已存在'
+                })
+            })
+            return
+        }
+
         res.set('Content-Type', 'application/json;charset=utf8')
 
         // 密码加密
-        let username = req.body.username
-        let password = req.body.password
-        let hash = await userController._hashPassword(password)
-        let result = await userModel.insert({ ...req.body, username: username, password: hash })
+        let password = await userController.hashPassword(req.body.password)
+        let result = await userModel.insert({
+            ...req.body,
+            password
+        })
 
         // 构建json 接口
         if (result) {
             res.render('success', {
                 data: JSON.stringify({
-                    message: '数据插入成功'
+                    message: '注册成功'
                 })
             })
         } else {
             res.render('fail', {
                 data: JSON.stringify({
-                    message: '数据插入失败'
+                    message: '注册失败'
                 })
             })
         }
     }
 
     async login(req, res, next) {
-        let result = await userModel.select(req.body.username)
-        
+        res.set('Content-Type', 'application/json;charset=utf8')
+
+        let result = await userModel.select(req.body)
+
         // 构建json 接口
         if (result) {
-            res.render('success', {
-                data: JSON.stringify({
-                    message: '登录成功'
+            if (await userController.comparePassword(req.body.password, result['password'])) {
+                res.render('success', {
+                    data: JSON.stringify({
+                        message: '登录成功'
+                    })
                 })
-            })
+            } else {
+                res.render('fail', {
+                    data: JSON.stringify({
+                        message: '密码错误'
+                    })
+                })
+            }
         } else {
             res.render('fail', {
                 data: JSON.stringify({
-                    message: '登录失败'
+                    message: '用户名不存在'
                 })
             })
         }

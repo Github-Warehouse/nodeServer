@@ -9,10 +9,15 @@ const userModel = {
     },
 
     // 数据存储
-    save(data) {
+    insert(data) {
         // 实例化model，传入要插入的数据
         let users = new this.Usermodel(data)
         return users.save()
+    },
+
+    // 查询单条数据
+    select(username) {
+        return this.Usermodel.findOne({ username })
     }
 
     // constructor() {

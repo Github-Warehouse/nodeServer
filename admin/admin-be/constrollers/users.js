@@ -1,5 +1,8 @@
 const userModel = require('../models/users')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const fs = require('fs')
+const path = require('path')
 
 class UserController {
     hashPassword(pwd) {
@@ -55,6 +58,11 @@ class UserController {
         }
     }
 
+    genToken(username) {
+        let key = fs.readFileSync(path.resolve(__dirname, '../keys/private.key'))
+        return jwt.sign({ username }, key, { algorithm: 'RS256' })
+    }
+
     async login(req, res, next) {
         res.set('Content-Type', 'application/json;charset=utf8')
 
@@ -65,8 +73,10 @@ class UserController {
             if (await userController.comparePassword(req.body.password, result['password'])) {
 
                 // 创建session 保存用户名
-                req.session.username = result['username']
-                // req.session = null
+                // req.session.username = result['username']
+
+                // 生成token，通过header发送
+                res.header('X-Access-Token', userController.genToken(result.username))
 
                 res.render('success', {
                     data: JSON.stringify({
@@ -88,35 +98,6 @@ class UserController {
                 })
             })
         }
-    }
-
-    islogin(req, res, next) {
-
-        res.set('Content-Type', 'application/json;charset=utf8')
-
-        if (req.session.username) {
-            res.render('success', {
-                data: JSON.stringify({
-                    username: req.session.username,
-                    isLogin: true
-                })
-            })
-        } else {
-            res.render('success', {
-                data: JSON.stringify({
-                    isLogin: false
-                })
-            })
-        }
-    }
-
-    logout(req, res, next) {
-        req.session = null
-        res.render('success', {
-            data: JSON.stringify({
-                isLogin: false
-            })
-        })
     }
 }
 

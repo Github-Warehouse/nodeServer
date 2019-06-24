@@ -19,6 +19,7 @@ class UserController {
     }
 
     async register(req, res, next) {
+        res.set('Content-Type', 'application/json;charset=utf8')
 
         let user = await userModel.select(req.body)
         if (user) {
@@ -30,7 +31,6 @@ class UserController {
             return
         }
 
-        res.set('Content-Type', 'application/json;charset=utf8')
 
         // 密码加密
         let password = await userController.hashPassword(req.body.password)
@@ -63,8 +63,14 @@ class UserController {
         // 构建json 接口
         if (result) {
             if (await userController.comparePassword(req.body.password, result['password'])) {
+
+                // 创建session 保存用户名
+                req.session.username = result['username']
+                // req.session = null
+
                 res.render('success', {
                     data: JSON.stringify({
+                        username: result['username'],
                         message: '登录成功'
                     })
                 })
@@ -82,6 +88,35 @@ class UserController {
                 })
             })
         }
+    }
+
+    islogin(req, res, next) {
+
+        res.set('Content-Type', 'application/json;charset=utf8')
+
+        if (req.session.username) {
+            res.render('success', {
+                data: JSON.stringify({
+                    username: req.session.username,
+                    isLogin: true
+                })
+            })
+        } else {
+            res.render('success', {
+                data: JSON.stringify({
+                    isLogin: false
+                })
+            })
+        }
+    }
+
+    logout(req, res, next) {
+        req.session = null
+        res.render('success', {
+            data: JSON.stringify({
+                isLogin: false
+            })
+        })
     }
 }
 
